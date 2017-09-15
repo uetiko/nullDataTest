@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Address;
+
 
 class RegisterController extends Controller
 {
@@ -13,7 +16,8 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::latest();
+        return view('register.index', compact('users'));
     }
 
     /**
@@ -23,7 +27,7 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        //
+        return view('register.create');
     }
 
     /**
@@ -34,7 +38,23 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'birthday' => 'required|date_format:d/m/Y',
+            'email' => 'required',
+            'calle' => 'required',
+            'estado' => 'required',
+            'delegacion_municipio' => 'required',
+            'numero_ext' => 'required',
+            'cp' => 'required'
+        ]);
+
+        $address = Address::create($request->all());
+        $user = User::firstOrCreate($request->all());
+        $user->address()->save($address);
+        return redirect()->route('register.index')->with(
+            'success', 'register'
+        );
     }
 
     /**
@@ -45,7 +65,8 @@ class RegisterController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('register.show', compact('user'));
     }
 
     /**
@@ -68,7 +89,22 @@ class RegisterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        request()->validate([
+            'calle' => 'required',
+            'estado' => 'required',
+            'delegacion_municipio' => 'required',
+            'numero_ext' => 'required',
+            'cp' => 'required'
+        ]);
+
+        $address = Address::create($request->all());
+        $user = User::find($id);
+        $user->address()->save($address);
+
+        return redirect()->route('register.index')->with(
+            'success', 'register'
+        );
     }
 
     /**
