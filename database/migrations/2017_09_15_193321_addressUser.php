@@ -19,6 +19,7 @@ class AddressUser extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('calle', 40);
             $table->string('estado', 30);
+            $table->string('colonia', 30);
             $table->string('delegacion_municipio', 30);
             $table->integer('numero_ext');
             $table->integer('numero_int');
