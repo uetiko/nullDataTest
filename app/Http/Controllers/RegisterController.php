@@ -16,7 +16,7 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        $user = User::latest();
+        $users = User::latest();
         return view('register.index', compact('users'));
     }
 
