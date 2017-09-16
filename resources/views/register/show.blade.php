@@ -7,7 +7,7 @@
                 <h2>Muestra usuario</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('$users.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('register.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 {{ $user->birtday}}
             </div>
         </div>
-        @foreach ($address as $user->address)
+        @foreach ($addresses as $address)
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>calle:</strong>
@@ -70,4 +70,3 @@
         </div>
         @endforeach
     </div>
-@

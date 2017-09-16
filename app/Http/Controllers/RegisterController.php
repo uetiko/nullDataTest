@@ -74,7 +74,9 @@ class RegisterController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('register.show', compact('user'));
+        $addresses = Address::where('user_id', $id)->get();
+        //$addresses = $addresses->all();
+        return view('register.show', compact('user', 'addresses'));
     }
 
     /**
