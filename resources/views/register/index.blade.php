@@ -20,14 +20,12 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>nombre</th>
             <th>cumpleaños</th>
             <th width="280px">Action</th>
         </tr>
     @foreach ($users as $user)
     <tr>
-        <td>{{ ++$i }}</td>
         <td>{{ $user->name}}</td>
         <td>{{ $user->birthday}}</td>
         <td>
