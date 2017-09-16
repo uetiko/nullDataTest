@@ -7,7 +7,7 @@
                 <h2>Nuevo registro</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('register.index') }}"< Back</a>
+                <a class="btn btn-primary" href="{{ route('register.index') }}"> Back</a>
             </div>
         </div>
     </div>

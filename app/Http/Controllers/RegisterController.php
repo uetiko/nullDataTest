@@ -51,7 +51,8 @@ class RegisterController extends Controller
 
         $address = Address::create($request->all());
         $user = User::firstOrCreate($request->all());
-        $user->address()->save($address);
+        $address->user_id = $user->id;
+        $address->save()
         return redirect()->route('register.index')->with(
             'success', 'register'
         );
