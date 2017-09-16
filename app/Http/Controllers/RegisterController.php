@@ -45,11 +45,19 @@ class RegisterController extends Controller
             'email' => 'required',
         ]);
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->birthday = DateTime::createFromFormat('d/m/Y', $request->birthday);
-        $user->save();
+        $user = User::where('email', $request->email)->get();
+
+        if($user->isEmpty())
+        {
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->birthday = DateTime::createFromFormat('d/m/Y', $request->birthday);
+            $user->save();
+        }else{
+            $user = $user->first();
+        }
 
         $address = new Address();
         $address->calle = $request->calle;
@@ -109,9 +117,15 @@ class RegisterController extends Controller
             'cp' => 'required'
         ]);
 
-        $address = Address::create($request->all());
         $user = User::find($id);
-        $user->address()->save($address);
+        $address = new Address();
+        $address->calle = $request->calle;
+        $address->estado = $request-> estado;
+        $address->delegacion_municipio = $request->delegacion_municipio;
+        $address->numero_ext = $request->numero_ext;
+        $address->cp = $request->cp;
+        $address->user_id = $user->id;
+        $address->save();
 
         return redirect()->route('register.index')->with(
             'success', 'register'
