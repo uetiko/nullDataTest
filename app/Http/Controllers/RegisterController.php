@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Address;
+use \DateTime;
 
 
 class RegisterController extends Controller
@@ -42,17 +43,23 @@ class RegisterController extends Controller
             'name' => 'required',
             'birthday' => 'required|date_format:d/m/Y',
             'email' => 'required',
-            'calle' => 'required',
-            'estado' => 'required',
-            'delegacion_municipio' => 'required',
-            'numero_ext' => 'required',
-            'cp' => 'required'
         ]);
 
-        $address = Address::create($request->all());
-        $user = User::firstOrCreate($request->all());
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->birthday = DateTime::createFromFormat('d/m/Y', $request->birthday);
+        $user->save();
+
+        $address = new Address();
+        $address->calle = $request->calle;
+        $address->estado = $request-> estado;
+        $address->delegacion_municipio = $request->delegacion_municipio;
+        $address->numero_ext = $request->numero_ext;
+        $address->cp = $request->cp;
         $address->user_id = $user->id;
-        $address->save()
+        $address->save();
+
         return redirect()->route('register.index')->with(
             'success', 'register'
         );
